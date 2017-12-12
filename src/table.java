@@ -54,23 +54,23 @@ class Table{
     		public void playGame() {
 	        // Deals players cards round wise. Repeats for loops to remain authentic.
 	        // Card 1
-	        deal(dealer);
+    			Card temp = new Card(8, "Spades");
+    			Card temp2 = new Card(9, "Spades");
+    			dealer.addCard(temp);
+    			dealer.addCard(temp2);
+    			Scanner sc = new Scanner(System.in);
 	        for (int i = 0; i < players.length - 1; i++) {
-	            deal(players[i]);   
+	            deal(players[i], sc);   
 	        }
 	        // Card 2
-	        deal(dealer);
 	        for (int i = 0; i < players.length - 1; i++) {
-	            deal(players[i]);
+	            deal(players[i], sc);
 	        }
 	        // Check to see if game has been won.
 	        while(playersStanding != players.length) {
 	        	for (int i = 0; i < players.length - 1; i++) {
-	                deal(players[i]);
+	                deal(players[i], sc);
 	            }
-	        }
-	        while(dealer.getHandVal() <= 16) {
-	        	deal(dealer);
 	        }
 	        getWinner();
 	    }
@@ -84,8 +84,7 @@ class Table{
     }
 
     /* Deals a player object a card from the top of a random deck. */
-    public void deal(final Player player) {
-    		Scanner sc = new Scanner(System.in);
+    public void deal(final Player player, Scanner sc) {
         if (checkHand(player) == true&& player.getPlayingGame()) {
             int deckNumber = (int) Math.random()*3;
             Card card = decks[deckNumber].getCard();
@@ -97,12 +96,8 @@ class Table{
             } else if (i == 2) {
             		player.togglePlayingGame();
             		playersStanding++;
-            } else {
-            		System.out.println("Wrong Choice try again!");
-            		deal(player);
             }
         }
-        sc.close();
     }
 
     /* Checks if dealer won, else, checks if players have met target and sets hands and bets accordingly.*/
