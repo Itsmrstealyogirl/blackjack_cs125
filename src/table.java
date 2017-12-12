@@ -51,14 +51,13 @@ class Table{
             players[i] = new Player(i);
         }
     }
-    		public void playGame() {
+    		public void playGame(Scanner sc) {
 	        // Deals players cards round wise. Repeats for loops to remain authentic.
 	        // Card 1
     			Card temp = new Card(8, "Spades");
     			Card temp2 = new Card(9, "Spades");
     			dealer.addCard(temp);
     			dealer.addCard(temp2);
-    			Scanner sc = new Scanner(System.in);
 	        for (int i = 0; i < players.length - 1; i++) {
 	            deal(players[i], sc);   
 	        }
@@ -67,7 +66,7 @@ class Table{
 	            deal(players[i], sc);
 	        }
 	        // Check to see if game has been won.
-	        while(playersStanding != players.length) {
+	        for(int j = 0; j < 4; j++) {
 	        	for (int i = 0; i < players.length - 1; i++) {
 	                deal(players[i], sc);
 	            }
@@ -115,12 +114,6 @@ class Table{
         return false;
     }
 
-    /* Method that allows player to stand. */
-    public void stand(Player a) {
-    	a.togglePlayingGame();
-    	playersStanding++;
-    }
-
     /*
      * Method used to determine winner of game.
      * @return Player object that wins the game.
@@ -157,20 +150,21 @@ class Table{
 
     public static void main(String[] args) {
     		boolean wannaPlay = true;
+
+    		Scanner sc = new Scanner(System.in);
     		while(wannaPlay) {
     			System.out.println("BlackJack");
-        		Scanner sc = new Scanner(System.in);
         		System.out.println("How many players? ");
 	    		int i = sc.nextInt();
 	    		Table gamePlay = new Table(i);
-	    		gamePlay.playGame();
+	    		gamePlay.playGame(sc);
 	    		System.out.println("Play again? 1.Yes 2. No ");
 	    		i = sc.nextInt();
 	    		if(i == 2) {
 	    			wannaPlay = false;
 	    		}
-	    		sc.close();
+	    		
     		}
-    		
+    		sc.close();
     }
 }
